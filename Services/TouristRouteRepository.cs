@@ -102,25 +102,37 @@ namespace FakeXiecheng.API.Services
             _context.TouristRoutePics.Remove(touristRoutePic);
         }
 
-        public async Task<ShoppingCart> GetShoppingCartByUserId(string userId)
+        public async Task<ShoppingCart> GetShoppingCartByUserIdAsync(string userId)
         {
             return await _context.ShoppingCarts.Include(s => s.User).Include(s => s.ShoppingCartItems).ThenInclude(item => item.TouristRoute).Where(s => s.UserId == userId).FirstOrDefaultAsync();
         }
 
-        public async Task CreateShoppingCart(ShoppingCart shoppingCart) {
+        public async Task<IEnumerable<LineItem>> GetShoppingCartItemsByItemIdsAsync(IEnumerable<int> lineItemIds) {
+            return await _context.LineItems.Where(item => lineItemIds.Contains(item.Id)).ToListAsync();
+        }
+
+        public async Task CreateShoppingCartAsync(ShoppingCart shoppingCart) {
             await _context.ShoppingCarts.AddAsync(shoppingCart);
         }
 
-        public async Task AddShoppingCartItem(LineItem lineItem) {
+        public async Task AddShoppingCartItemAsync(LineItem lineItem) {
             await _context.LineItems.AddAsync(lineItem);
         }
 
-        public async Task<LineItem> GetShoppingCartItemByItemId(int lineItemId){
+        public async Task<LineItem> GetShoppingCartItemByItemIdAsync(int lineItemId){
             return await _context.LineItems.Where(li => li.Id == lineItemId).FirstOrDefaultAsync();
         }
 
         public void DeleteShoppingCartItem(LineItem lineItem) {
              _context.LineItems.Remove(lineItem);
+        }
+
+        public void DeleteShoppingCartItems(IEnumerable<LineItem> lineItems) {
+            _context.LineItems.RemoveRange(lineItems);
+        }
+
+        public async Task AddOrderAsync(Order order) {
+           await _context.Orders.AddAsync(order);
         }
     }
 }

@@ -87,23 +87,35 @@ namespace FakeXiecheng.API.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<ShoppingCart> GetShoppingCartByUserId(string userId);
+        Task<ShoppingCart> GetShoppingCartByUserIdAsync(string userId);
 
         /// <summary>
         /// 创建购物车
         /// </summary>
         /// <param name="shoppingCart"></param>
         /// <returns></returns>
-        Task CreateShoppingCart(ShoppingCart shoppingCart);
+        Task CreateShoppingCartAsync(ShoppingCart shoppingCart);
 
         /// <summary>
         /// 给购物车添加商品
         /// </summary>
         /// <param name="lineItem"></param>
         /// <returns></returns>
-        Task AddShoppingCartItem(LineItem lineItem);
+        Task AddShoppingCartItemAsync(LineItem lineItem);
 
-        Task<LineItem> GetShoppingCartItemByItemId(int lineItemId);
+        /// <summary>
+        /// 获取购物车的某个商品
+        /// </summary>
+        /// <param name="lineItemId">商品id</param>
+        /// <returns></returns>
+        Task<LineItem> GetShoppingCartItemByItemIdAsync(int lineItemId);
+
+        /// <summary>
+        /// 批量获取购物车商品
+        /// </summary>
+        /// <param name="lineItemIds">多个商品ids</param>
+        /// <returns></returns>
+        Task<IEnumerable<LineItem>> GetShoppingCartItemsByItemIdsAsync(IEnumerable<int> lineItemIds);
 
         /// <summary>
         /// 删除商品
@@ -111,6 +123,20 @@ namespace FakeXiecheng.API.Services
         /// <param name="lineItem"></param>
         /// <returns></returns>
         void DeleteShoppingCartItem(LineItem lineItem);
+
+        /// <summary>
+        /// 批量删除商品
+        /// </summary>
+        /// <param name="lineItems"></param>
+        /// <returns></returns>
+        void DeleteShoppingCartItems(IEnumerable<LineItem> lineItems);
+
+        /// <summary>
+        /// 添加订单
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        Task AddOrderAsync(Order order);
 
     }
 }

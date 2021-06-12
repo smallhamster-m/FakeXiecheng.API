@@ -98,7 +98,7 @@ namespace FakeXiecheng.API.Controllers
                 Id = Guid.NewGuid(),
                 UserId = user.Id,
             };
-            await _touristRouteRepository.CreateShoppingCart(shoppingCart);
+            await _touristRouteRepository.CreateShoppingCartAsync(shoppingCart);
             await _touristRouteRepository.SaveAsync();
 
             return Ok();

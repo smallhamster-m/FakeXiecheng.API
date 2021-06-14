@@ -18,7 +18,7 @@ namespace FakeXiecheng.API.Services
         /// <param name="operatorType">大于，小于，等于</param>
         /// <param name="ratingValue">分数</param>
         /// <returns></returns>
-        Task<IEnumerable<TouristRoute>> GetTouristRoutesAsync(string keyword, string operatorType, int? ratingValue);
+        Task<IEnumerable<TouristRoute>> GetTouristRoutesAsync(string keyword, string operatorType, int? ratingValue,int pageNumber,int  pageSize);
 
         Task<IEnumerable<TouristRoute>> GetTouristRoutesByIDListAsync(IEnumerable<Guid> guids);
 
@@ -143,8 +143,8 @@ namespace FakeXiecheng.API.Services
         /// </summary>
         /// <param name="userId">用户id</param>
         /// <returns></returns>
-        Task<IEnumerable<Order>> GetOrders(string userId);
+        Task<IEnumerable<Order>> GetOrdersAsync(string userId);
 
-        Task<Order> GetOrderById(Guid guid);
+        Task<Order> GetOrderByIdAsync(Guid guid);
     }
 }

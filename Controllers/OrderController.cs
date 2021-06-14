@@ -33,7 +33,7 @@ namespace FakeXiecheng.API.Controllers
         {
             //获取用户id
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-           var orders = await _touristRouteRepository.GetOrders(userId);
+           var orders = await _touristRouteRepository.GetOrdersAsync(userId);
             return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
         #endregion
@@ -43,10 +43,11 @@ namespace FakeXiecheng.API.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetOrderById([FromRoute] Guid id)
         {
-           var order = await _touristRouteRepository.GetOrderById(id);
+           var order = await _touristRouteRepository.GetOrderByIdAsync(id);
             return Ok(_mapper.Map<OrderDto>(order));
         }
         #endregion
 
     }
 }
+ 

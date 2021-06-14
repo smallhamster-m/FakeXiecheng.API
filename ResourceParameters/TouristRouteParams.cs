@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace FakeXiecheng.API.ResourceParameters
 {
+
     public class TouristRouteParams
     {
         public string Keyword { get; set; }
         public string OperatorType { get; set; }
         public int? RatingValue { get; set; }
         private string _rating;
-        public string Rating { get { return _rating; } set {
+        public string Rating
+        {
+            get { return _rating; }
+            set
+            {
 
                 if (!string.IsNullOrWhiteSpace(value))
                 {
@@ -26,7 +31,27 @@ namespace FakeXiecheng.API.ResourceParameters
                     }
                 }
                 _rating = value;
-            } }
+            }
+        }
+
+        private int _pageNumber = 1;
+        public int PageNumber { get { return _pageNumber; } set { if (value >= 1) _pageNumber = value; } }
+
+        private int _pageSize = 10;
+        const int maxPageSize = 50;
+        public int PageSize
+        {
+            get { return _pageSize; }
+            set
+            {
+                if (value >= 1)
+                {
+                    _pageSize = value > maxPageSize ? maxPageSize : value;
+                }
+            }
+        }
+
+
 
     }
 }

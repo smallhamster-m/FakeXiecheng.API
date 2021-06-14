@@ -21,7 +21,7 @@ namespace FakeXiecheng.API.Services
             return await _context.TouristRoutes.Include(item => item.TouristRoutePics).FirstOrDefaultAsync(n => n.Id == id);
         }
 
-        public async Task<IEnumerable<TouristRoute>> GetTouristRoutesAsync(string keyword, string operatorType, int? ratingValue)
+        public async Task<IEnumerable<TouristRoute>> GetTouristRoutesAsync(string keyword, string operatorType, int? ratingValue, int pageNumber, int pageSize)
         {
             IQueryable<TouristRoute> res = _context.TouristRoutes.Include(item => item.TouristRoutePics);
             if (!string.IsNullOrWhiteSpace(keyword))
@@ -38,6 +38,11 @@ namespace FakeXiecheng.API.Services
                     _ => res.Where(t => t.Rating == ratingValue),
                 };
             }
+            //分页查询
+            var skip = (pageNumber - 1) * pageSize;//跳过前n个元素
+            res = res.Skip(skip);
+            res = res.Take(pageSize);
+
             return await res.ToListAsync();
         }
 
@@ -135,11 +140,11 @@ namespace FakeXiecheng.API.Services
            await _context.Orders.AddAsync(order);
         }
 
-        public async Task<IEnumerable<Order>> GetOrders(string userId) {
+        public async Task<IEnumerable<Order>> GetOrdersAsync(string userId) {
           return  await _context.Orders.Where(o => o.UserId == userId).Include(o => o.OrderItems).ThenInclude(li => li.TouristRoute).ToListAsync();
         }
 
-        public async Task<Order> GetOrderById(Guid guid) {
+        public async Task<Order> GetOrderByIdAsync(Guid guid) {
             return await _context.Orders.Where(o => o.Id == guid).Include(o => o.OrderItems).ThenInclude(li => li.TouristRoute).FirstOrDefaultAsync();
         }
     }

@@ -134,5 +134,13 @@ namespace FakeXiecheng.API.Services
         public async Task AddOrderAsync(Order order) {
            await _context.Orders.AddAsync(order);
         }
+
+        public async Task<IEnumerable<Order>> GetOrders(string userId) {
+          return  await _context.Orders.Where(o => o.UserId == userId).Include(o => o.OrderItems).ThenInclude(li => li.TouristRoute).ToListAsync();
+        }
+
+        public async Task<Order> GetOrderById(Guid guid) {
+            return await _context.Orders.Where(o => o.Id == guid).Include(o => o.OrderItems).ThenInclude(li => li.TouristRoute).FirstOrDefaultAsync();
+        }
     }
 }

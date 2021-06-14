@@ -138,5 +138,13 @@ namespace FakeXiecheng.API.Services
         /// <returns></returns>
         Task AddOrderAsync(Order order);
 
+        /// <summary>
+        /// 获取用户所有的订单
+        /// </summary>
+        /// <param name="userId">用户id</param>
+        /// <returns></returns>
+        Task<IEnumerable<Order>> GetOrders(string userId);
+
+        Task<Order> GetOrderById(Guid guid);
     }
 }
